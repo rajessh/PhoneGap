@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+       <title>TRACK ORDER</title> 
+       
+              <meta name="viewport" content="width=device-width, initial-scale=1">
+              
+              <script src="../js/cordova-1.7.0rc1.js"></script>
+              
+              <script src="../js/jquery-1.7.1.min.js"></script>             
+              
+              <link rel="stylesheet" href="../css/jquery.mobile-1.1.0.css" />
+              
+              <link rel="stylesheet" href="../customCss/home.css" />
+              
+              <script src="../js/jquery.mobile-1.1.0.min.js"></script> 
+              
+              <script>
+                     
+              function searchTable(inputVal) {
+                     
+             var table = $('#searchTable');
+             
+             table.find('tr').each(function(index, row) {
+               
+                     var allCells = $(row).find('td');
+                     
+                     if (allCells.length > 0) {
+                      
+                             var found = false;
+                             
+                             allCells.each(function(index, td) {
+                                   
+                                     var regExp = new RegExp(inputVal, 'i');
+                                     
+                                     if (regExp.test($(td).text())) {
+                                          
+                                             found = true;
+                                             
+                                             return false;
+                                             
+                                     }
+                                     
+                             });
+                             
+                             if (found == true)
+                                   
+                                     $(row).show();
+                             
+                             else
+                                   
+                                     $(row).hide();
+                     }
+             });
+     }
+              
+              </script>
+              
+</head>
+
+<body>
+
+       <div data-role="page" id="pid">
+       <script>
+       
+       	var cref = '';
+			
+		var oref = '';
+       
+       $('#pid').live('pageinit',function(event){
+              
+    	   
+    	   			jQuery.support.cors = true;
+    		  
+              		$('#second').hide();
+              
+                     
+                     
+                     //alert('hello');
+            
+             
+              		$('#trk').click(function(){
+              			
+              			
+              			
+              			cref = $('#cid').val();
+              			
+              			oref = $('#oid').val();
+              			
+              			$('#tdcid').append(cref);
+              			
+              			$('#tdoid').append(oref);
+              			
+              			//alert('Cref:'+cref+':Oref:'+oref);
+              			
+              			
+              			to_send = {
+              					
+              					ReferenceNumber : cref, 
+              					
+              					OrderNumber : oref
+              					
+              			};
+              	         
+              			
+              			
+              			
+                        $.ajax({
+                        		
+                              
+                              async:false,
+                              
+                              type: "POST",
+                              
+                              url: "http://172.18.98.31/TrwAftermarket_M/login.asmx/GetOrderDetails",
+                              
+                              data: to_send,
+                              
+                              dataType: "xml",
+                              
+                              success: function(data,textStatus,jqXHR){
+                            	  
+                            	 
+                            	  
+                            	  xml = $(data).find('string').text();
+                            	  
+                            	  var count=$(xml).find("Table").length;
+                            	  
+                            	  //alert(count);
+                            	  //alert(xml);
+                            	  
+                            	  //alert('inside success');
+                                     
+                            	  
+                            	  
+                               		var line = '';
+									
+                               		var part = '';
+                                    
+                               		var quantity = '';
+                                    
+                               		var status = '';
+                                    
+                               		var thetable = '';
+                               		
+                               		if(count>0)
+                               			
+                                     
+                               		{
+                               			
+                               		 $('#first').hide();
+                         			
+                         			$('#second').show();
+                               			
+                                     $(xml).find('Table').each(function(){
+                                            
+                                            line = $(this).find('orderlinenumber').text();
+                                            
+                                           // alert(line);
+                                            
+                                            part = $(this).find('entereditem').text();
+                                            
+                                            quantity = Math.floor($(this).find('orderedquantity').text());
+                                            
+                                            status = $(this).find('orderlinestatustext').text();
+                                            
+                                            thetable += '<tr><td align="center" style="width:25%" ><font color="f5f5f5">';
+                                            
+                                            thetable += line;
+                                            
+                                            thetable += '</font></td><td align="center" style="width:25%" ><font color="f5f5f5">';
+                                            
+                                            thetable += part;
+                                            
+                                            thetable += '</font></td><td align="center" style="width:25%"><font color="f5f5f5">';
+                                            
+                                            thetable += quantity;
+                                            
+                                            thetable += '</font></td><td align="center" style="width:25%"><font color="f5f5f5">';
+                                            
+                                            thetable += status;
+                                            
+                                            thetable += '</font></td></tr>';
+                                            
+                                            
+                                            
+                                            
+                                     });
+                                     
+                                     $(thetable).appendTo('#searchTable table tbody');
+                                     
+                                     //alert('Line'+line);
+                                     
+                               		}
+                               		
+                               		else{
+                               			
+                               			$('#first').show();
+                             			
+                             			$('#second').hide();
+                             			
+                             			$('#cid').val("");
+                             			
+                             			$('#oid').val("");
+                               			
+                               			alert('No records found');
+                               		}
+                                     
+                                     
+                              },
+                              
+                              error:function(jqXHR, textStatus, errorThrown){
+                            	  		
+                            	  var url="trackOrder.html"
+                            	  $(location).attr('href',url);
+                                     alert('Please enter correct data');
+                                     alert(errorThrown);
+                              }
+                        });
+                        
+              			
+              			
+              			
+              		});
+                     
+                     
+              $('#search').keyup(function() {
+                     
+                     //alert('Search enabled');
+                     
+            searchTable($(this).val());
+            
+       });
+              
+       });
+       
+       </script>
+       <div data-role="header">
+       
+              <h1>Track Order</h1>
+              <img src="../customCss/images/logo_TRW.png" data-inline="true" class="ui-btn-left" id="headimg">
+              <a href="home.html" data-icon="home" data-theme="a" class="ui-btn-right" data-ajax="false" id="headbtn">Home</a>
+       </div>
+
+       <div data-role="content">
+       
+       <div id="first">
+       
+       		<div data-role="fieldcontain" align="center">
+       		          
+            	<label for="cid">Customer Reference</label><br>
+            	
+            	<input type="text" name="cid" id="cid"><br>
+            
+         	</div>
+         	
+         	<div data-role="fieldcontain" align="center">
+       		          
+            	<label for="oid">Order Id</label><br>
+            	
+            	<input type="text" name="oid" id="oid"><br>
+            
+         	</div>
+         	
+         	<div data-role="fieldcontain" align="center">
+         	
+         		<a href="#" data-role="button" data-mini="true" data-ajax="false" id="trk" data-inline="true">Track</a>
+         	
+         	</div>
+       
+       </div>
+       
+       <div id="second">
+       
+       		<table width="100%">
+			<tr><td width="50%" align="right"><strong>Customer Refernce:  </strong></td><td width="50%" align="left" id="tdcid"></td></tr>
+			<tr><td width="50%" align="right"><strong>Order Id:  </strong></td><td width="50%" align="left" id="tdoid"></td></tr>
+		</table>
+       
+              <p>
+                     <input type="search" id="search">
+              </p>
+              
+              
+              <div id="container"> 
+              <table width="100%" border="1">
+              <tr>
+       <td>
+                     <table width="100%" border="1">
+                     <thead>
+                           
+                                  <tr>
+                                                                   
+                                         <th style="width:25%"><h2>Line No</h2></th>
+                                         
+                                         <th style="width:25%"><h2>Part</h2></th>
+                                         
+                                         <th style="width:25%"><h2>Quantity</h2></th>
+                                         
+                                         <th style="width:25%"><h2>Status</h2></th>
+                                  
+                                  </tr>
+                           
+                           </thead>
+                     
+                     </table>
+       </td>
+              </tr>
+              
+              <tr>
+              
+       <td>
+                     <div style="height:20em; overflow:auto;" id="searchTable">
+                     <table width="100%" border="1">
+                          <tbody>
+                           
+                                  </tbody>
+                     </table>  
+                     </div>
+       </td>
+              </tr>
+              </table>
+
+              
+              </div>
+       
+           
+              
+            
+       </div>
+       
+       </div>
+       
+       </div>
+
+</body>
+
+</html>

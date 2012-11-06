@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+ 
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Simple Test</title>
+  <script src="../js/cordova-1.7.0rc1.js"></script>
+   <link rel="stylesheet" type="text/css" href="../css/jquery.jqplot.min.css" />
+   <script language="javascript" type="text/javascript" src="../js/jquery-1.7.1.min.js"></script>
+   <script type="text/javascript" language="javascript" src="../js/jquery.dataTables.js"></script>
+   <script language="javascript" type="text/javascript" src="../js/jquery.jqplot.min.js"></script>
+   <script language="javascript" type="text/javascript" src="../js/jqplot.pieRenderer.min.js"></script>
+   <link rel="stylesheet" href="../css/jquery.mobile-1.1.0.min.css" />
+   	<link rel="stylesheet" href="../css/jquery.dataTables.css" />
+  <script src="../js/jquery.mobile-1.1.0.min.js"></script> 
+   <style type="text/css">
+              div.jqplot-target { margin-bottom: 45px; }
+   </style>
+   				<script>
+					   $(document).ready(function(){
+						   jQuery.jqplot.config.enablePlugins = true;
+						   plot9 = jQuery.jqplot('chart9',
+						     [[['Delivererd', 15],['Accepted', 17], 
+						      ['Allocated', 10]]],
+						     {
+						       title: ' ',
+						       seriesDefaults: 
+						       		{shadow: true, renderer: jQuery.jqplot.PieRenderer, rendererOptions: 
+						       		{
+						           		fill: true,
+						           		sliceMargin: 4,
+						           		showDataLabels: true
+						           }
+						       },
+						       legend: {
+						    	   show:true, 
+						    	   location:'n'   
+						       }
+						     }
+						   );
+						 });
+					   
+					   function debC()
+						{
+							//alert('working??');
+							$('#list').hide();
+						 	$('#pie').show();
+
+						}
+					   function creC()
+						{
+							//alert('working??');
+							$('#pie').hide();
+						 	$('#list').show();
+
+						}
+					   </script>
+   
+   </head> 
+   <body>
+   			<div data-role="page" id="my-page">
+   				<script>
+   				$('#my-page').live('pageinit',function(){
+   					
+   					//alert('working kya?');
+   					$('#list').hide();
+   					
+   					$("#my-page").swipeleft(function() {
+   					   // alert('left swipe');
+   						 var url="p2.html";
+						 $(location).attr('href',url);
+   					});
+   				});
+   				</script>
+   				<div data-role="header">
+					<h1>TRW</h1>
+				</div>
+				<div data-role="content" id="hh">
+				<div data-role="fieldcontain" align="center">
+					<fieldset data-role="controlgroup" data-type="horizontal" align="right">
+						<img alt="TRW - Safety" src=TRW_logo.PNG>
+					</fieldset>
+			
+	    			<fieldset data-role="controlgroup" data-type="horizontal" align="center">
+	     			<div style="width: 300px; margin: 25 auto;">
+	         	
+	         		<input type="radio" name="radio-view" id="radio-view-b" value="cc" data-mini="true" onclick="debC()" checked="checked"/>
+	         		<label for="radio-view-b">Dashboard</label>
+	         
+	         		<input type="radio" name="radio-view" id="radio-view-d" value="ec" data-mini="true"  onclick="creC()"/>
+	         		<label for="radio-view-d">Product Search</label>
+	         		<div id="h2"></div>
+	         		</div>
+	         		</fieldset>
+	         		
+	         		<div data-role="fieldcontain" id="pie">	
+	         			<div id="chart9" style="margin-top:20px; margin-left:0px; width:240px; height:300px;"></div>
+	         		</div>
+	         		<div data-role="fieldcontain" id="list">		
+							
+						<br><br>	
+						<ul data-role="listview" data-inset="true" data-mini="true" data-filter="true" data-filter-placeholder="Enter TRW Part number">
+							<li data-role="list-divider" align="center">View Details</li>
+							<li><a href="details.html">GAC223</a></li>
+							<li><a href="details.html">GDB199</a></li>
+							<li><a href="details.html">EBG320</a></li>
+							<li><a href="details.html">ATC109</a></li>
+							<li><a href="details.html">BVC320</a></li>
+						</ul>
+				</div>
+	    		</div>		
+			</div>
+   		</div>
+   </body>

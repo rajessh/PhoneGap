@@ -1,0 +1,141 @@
+<html>
+	<head>
+		<title>My Page NV</title> 
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="../js/cordova-1.7.0rc1.js"></script>
+		<script src="../js/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" language="javascript" src="../js/jquery.dataTables.js"></script>
+
+
+		<link rel="stylesheet" href="../css/jquery.mobile-1.1.0.min.css" />
+		<link rel="stylesheet" href="../css/jquery.dataTables.css" />
+
+
+
+
+
+
+
+<style type="text/css">
+body {
+	color: purple;
+	background-repeat: no-repeat;
+	background: #cbccc8;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff),
+		to(#cbccc8) );
+	background: -moz-linear-gradient(top, #fff, #cbccc8);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff',
+		endColorstr='#cbccc8' );
+}
+
+
+table { width:100%; }
+			table caption { text-align:Center;  }
+			table thead th { text-align:Center; border-bottom-width:1px; border-top-width:1px; }
+			table th, td { text-align:Center; padding:6px; border: 0px #ccc; border: solid black;
+
+
+</style>
+
+
+
+
+
+
+
+
+		
+		<script src="../js/jquery.mobile-1.1.0.min.js"></script> 
+		<script type="text/javascript">
+		</script>
+		<script type="text/javascript" charset="utf-8">
+			$(document).ready(function() {
+				//$('#example').dataTable();
+				//$('#example').dataTable('refresh');
+			} );
+		</script>
+
+	</head>
+	<div data-role="page" id="my-page">
+
+		<IMG SRC="Nissan.jpg" WIDTH="100" HEIGHT="100" BORDER="0" ALT="">
+
+
+		<div data-role="header" style="text-align:Center;">
+		<h1>Part Details</h1>
+	</div>
+		
+	
+	<div data-role="content">
+		<div>
+
+		
+		<ul data-role="listview" data-inset="true" data-mini="true" >
+		<li data-role="list-divider" align="center"> To be Added</li>
+		
+</ul>
+		
+	 <img alt="TRW - Safety" src="1.jpg"  style="float:left"/>
+					
+		
+	<table cellpadding="0" cellspacing="0" border="0" class="display" id="example" width="100%">
+	<thead>
+		<tr>
+			<th>Attribute</th>
+			<th>Value</th>
+		</tr>
+	</thead>
+	<tbody>
+	
+		<tr class="even gradeC">
+			<td>Trade number</td>
+			<td>20393</td>
+		</tr>
+		<tr class="odd gradeA">
+			<td>Thickness[mm]</td>
+			<td>15.5</td>
+		
+		</tr>
+		<tr class="even gradeA">
+			<td>Manufacturer restriction</td>
+			<td>Delco</td>
+
+		</tr>
+		<tr class="odd gradeA">
+			<td>Length[mm]</td>
+			<td>100</td>
+
+		</tr>
+		<tr class="even gradeA">
+			<td>Inspection Tag</td>
+			<td>E1 90R</td>
+
+		</tr>
+		<tr class="odd gradeA">
+			<td>Height[mm]</td>
+			<td>59</td>
+
+		</tr>
+
+	</tbody>
+	
+</table>
+<script>
+			$( '#my-page' ).live('pageinit',function(event){
+				//alert('table');
+				$('#example').dataTable({
+				        "bFilter": false,
+				        "bInfo": false,
+				        "bLengthChange": false
+					  });
+			//	$('#example').dataTable('refresh');
+			});
+		</script>
+		</div>
+	</div>
+	
+</div>
+	
+	</body>
+	
+</html>
